@@ -9,15 +9,19 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
-  return playerSelection === computerSelection
-    ? "Tie!"
-    : playerSelection === "rock" && computerSelection === "scissors"
-    ? `You win, ${playerSelection} beats ${computerSelection}!`
-    : playerSelection === "paper" && computerSelection === "rock"
-    ? `You win, ${playerSelection} beats ${computerSelection}!`
-    : playerSelection === "scissors" && computerSelection === "paper"
-    ? `You win, ${playerSelection} beats ${computerSelection}!`
-    : `You lose, ${computerSelection} beats ${playerSelection}!`;
+  if (playerSelection === computerSelection) {
+    return "Tie!";
+  } else if (
+    (playerSelection === "rock" && computerSelection === "scissors") ||
+    (playerSelection === "paper" && computerSelection === "rock") ||
+    (playerSelection === "scissors" && computerSelection === "paper")
+  ) {
+    playerScore++;
+    return `You win, ${playerSelection} beats ${computerSelection}!`;
+  } else {
+    computerScore++;
+    return `You lose, ${computerSelection} beats ${playerSelection}!`;
+  }
 }
 
 const computerSelection = getComputerChoice();
@@ -52,7 +56,7 @@ function game() {
 
   while (round < roundsToPlay) {
     const computerSelection = getComputerChoice();
-    const playerSelection = "rock";
+    const playerSelection = "rock"; // value to change
     const result = playRound(playerSelection, computerSelection);
     console.log(result);
     console.log(
@@ -63,10 +67,10 @@ function game() {
 
   const gameResult =
     playerScore > computerScore
-      ? "Congratulations! You win the game!"
+      ? "You win!"
       : playerScore < computerScore
-      ? "Oops! You lose the game."
-      : "It's a tie! The game ends in a draw.";
+      ? "You lose :("
+      : "Draw!";
 
   console.log(gameResult);
 }
